@@ -1,3 +1,6 @@
+# Papyr
+
+**leverages web scraping and APIs to retrieve research papers from multiple sources and uses a fine-tuned Hugging Face model to summarize them efficiently. The tool is designed for researchers and students to easily access and digest academic papers.
 
 
 ### In return_information.py: 
