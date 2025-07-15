@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <title>Summarizer & QA Bot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    
+    .tab {
+      display: none;
+    }
+    
+    .tab.active {
+      display: block;
+    }
+  </style>
+  <script>
+    function showTab(tabId) {
+      document.getElementById('summarize-tab').classList.remove('active');
+      document.getElementById('qa-tab').classList.remove('active');
+      document.getElementById(tabId).classList.add('active');
+
+      const buttons = document.querySelectorAll('.tab-buttons button');
+      buttons.forEach(btn => btn.classList.remove('ring-2', 'ring-offset-2', 'ring-amber-500', 'ring-offset-amber-100', 'bg-amber-100', 'text-amber-900', 'bg-green-100', 'text-green-900'));
+      const activeBtn = document.querySelector(`.tab-buttons button[data-tab="${tabId}"]`);
+      if (activeBtn) {
+        if(tabId === 'summarize-tab'){
+          activeBtn.classList.add('ring-2', 'ring-offset-2', 'ring-amber-500', 'ring-offset-amber-100', 'bg-amber-100', 'text-amber-900');
+        } else {
+          activeBtn.classList.add('ring-2', 'ring-offset-2', 'ring-green-500', 'ring-offset-green-100', 'bg-green-100', 'text-green-900');
+        }
+      }
+
+      
+
+
+
+
+      const newUrl = `${window.location.pathname}?tab=${tabId}`;
+      history.replaceState(null, '', newUrl);
+    }
+
+    function getQueryParam(param) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(param);
+    }
+
+
+
+
+    window.onload = function () {
+      const tabParam = getQueryParam('tab');
+      if (tabParam === 'qa-tab') {
+        showTab('qa-tab');
+      } else {
+        showTab('summarize-tab');
+      }
+    }
+  </script>
+</head>
+
+
+<body class="bg-gray-50 min-h-screen font-sans text-gray-700">
+
+  <h1 class="text-4xl font-extrabold text-center mb-10 tracking-tight">Summarizer & QA Bot</h1>
+
+  <div class="tab-buttons flex justify-center space-x-6 mb-10">
+    <button
+      data-tab="summarize-tab"
+      onclick="showTab('summarize-tab')"
+      class="rounded-md px-6 py-3 font-semibold transition focus:outline-none"
+      aria-label="Summarizer tab"
+    >
+      Summarizer
+    </button>
+    <button
+
+
+      data-tab="qa-tab"
+      onclick="showTab('qa-tab')"
+      class="rounded-md px-6 py-3 font-semibold transition focus:outline-none"
+      aria-label="QA Bot tab"
+    >
+      QA Bot
+    </button>
+  </div>
+
+  <div id="summarize-tab" class="tab max-w-3xl mx-auto bg-amber-50 border border-amber-300 rounded-lg shadow-lg p-8">
+    <form action="/summarize?tab=summarize-tab" method="post" class="space-y-5">
+      <textarea
+        name="text"
+        rows="10"
+        placeholder=""
+        class="w-full rounded-md border border-amber-300 p-4 text-lg placeholder-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400 resize-y"
+      >{{ input_text }}</textarea>
+      <button
+        type="submit"
+        class="w-full bg-amber-400 hover:bg-amber-500 text-amber-900 font-bold py-3 rounded-md shadow-md transition"
+      >
+        Summarize
+      </button>
+    </form>
+
+    <h2 class="text-2xl font-semibold text-amber-700 mt-10 mb-4">Summary:</h2>
+    <div
+      class="summary-container bg-white border border-amber-200 rounded-md p-6 min-h-[120px] whitespace-pre-wrap text-base shadow-inner"
+    >
+      {{ summary }}
+    </div>
+  </div>
+
+ 
+
+  
+  <div id="qa-tab" class="tab max-w-3xl mx-auto bg-green-50 border border-green-300 rounded-lg shadow-lg p-8">
+    <form action="/qabot?tab=qa-tab" method="post" class="space-y-5">
+      <textarea
+        name="text"
+        rows="10"
+        placeholder=""
+        required
+        class="w-full rounded-md border border-green-300 p-4 text-lg placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-green-400 resize-y"
+      >{{ input_text }}</textarea>
+      <input
+        type="text"
+        name="question"
+        placeholder="Type your question here..."
+        value="{{ question or '' }}"
+        required
+        class="w-full rounded-md border border-green-300 p-4 text-lg placeholder-green-400 focus:outline-none focus:ring-2 focus:ring-green-400"
+      />
+      <button
+        type="submit"
+        class="w-full bg-green-400 hover:bg-green-500 text-green-900 font-bold py-3 rounded-md shadow-md transition"
+      >
+        Get Answer
+      </button>
+    </form>
+
+    <h2 class="text-2xl font-semibold text-green-700 mt-10 mb-4">Answer:</h2>
+    <div
+      class="answer-container bg-white border border-green-200 rounded-md p-6 min-h-[120px] whitespace-pre-wrap text-base shadow-inner"
+    >
+      {{ answer or '' }}
+    </div>
+  </div>
+
+</body>
+</html>
