@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ paper.title }}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>{{ paper.title }}</h1>
+    <p><strong>Authors:</strong> {{ paper.authors }}</p>
+    <h3>Abstract:</h3>
+    <p>{{ paper.abstract }}</p>
+
+    <h3>Ask a question about this paper:</h3>
+    <form method="post" action="/paper/{{ paper.id }}/qa">
+        <input type="text" name="question" placeholder="Your question" required style="width:400px;">
+        <button type="submit">Ask</button>
+    </form>
+
+    {% if answer %}
+    <h3>Answer:</h3>
+    <p>{{ answer }}</p>
+    {% endif %}
+
+    <a href="/results?query=">Back to Results</a>
+</body>
+</html>

@@ -1,0 +1,8 @@
+fastapi
+uvicorn
+requests
+sqlalchemy
+transformers
+sentence-transformers
+faiss-cpu
+jinja2
