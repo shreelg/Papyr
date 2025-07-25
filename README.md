@@ -18,7 +18,7 @@ Papyr is a research-focused text summarization and question-answering tool, desi
 - Embedded chunks are stored for efficient similarity-based retrieval.
 - Includes a **custom Top-K retrieval system** with optimized chunking and storage logic to make sure relevant answers are surfaced quickly.
  embedded chunks for fast similarity-based retrieval.
-
+- FastAPI and Docker for easy deployment.
 
 ## File structure
 <img width="231" height="323" alt="image" src="https://github.com/user-attachments/assets/c51e3bcf-35b9-49ea-8308-c9d449c271dc" />
